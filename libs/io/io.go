@@ -36,7 +36,3 @@ func GetString(prompt string) string {
 	fmt.Scanln(&s)
 	return s
 }
-
-func M (format string, a ...interface{}) {
-	fmt.Fprintf(Stdout, green(format), a...)
-}

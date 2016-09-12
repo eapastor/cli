@@ -10,13 +10,13 @@ import (
 
 func Login(c *cli.Context) (err error) {
 
-	var cfg = config.Get()
+	var msg = config.Get().Msg
 	var ctx = context.Get()
 
-	io.Println(cfg.Msg.Login.StartMessage)
+	io.Println(msg.Login.StartMessage)
 
-	login := io.GetString(cfg.Msg.Login.EnterEmail)
-	io.Print(cfg.Msg.Login.EnterPass)
+	login := io.GetString(msg.Login.EnterEmail)
+	io.Print(msg.Login.EnterPass)
 	bytePass, err := gopass.GetPasswd()
 	if err != nil {
 		ctx.Debug.Error(err)
@@ -62,7 +62,24 @@ func Logout(c *cli.Context) (err error) {
 
 func Whoami(c *cli.Context) (err error) {
 
+	ctx := context.Get()
 
+	token, err := context.Get().Storage.Token.Get()
+	if err != nil {
+		ctx.Debug.Error(err)
+		return err
+	}
+
+	h, user, err := ctx.API.User.Get(token)
+	if err != nil {
+		ctx.Debug.Info("\n REQUEST : %+v \n\n RESPONSE : %+v \n", h.Request.Header, h.Response)
+
+		return err
+	}
+
+	ctx.Debug.Info("::user %#v", user)
+
+	io.Printf("You are loggined by %s ",user.Username)
 
 	return nil
 

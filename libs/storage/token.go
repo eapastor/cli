@@ -4,6 +4,8 @@ import (
 )
 import "github.com/lastbackend/cli/libs/io/filesystem"
 
+const _TOKEN_TYPE = "Bearer "
+
 type Token struct {
 	Path string
 }
@@ -43,6 +45,10 @@ func (t *Token) Get() (token string, err error) {
 		return "", err
 	}
 	token = string(b)
+
+	if token != "" {
+		token = _TOKEN_TYPE + token
+	}
 
 	return token, nil
 

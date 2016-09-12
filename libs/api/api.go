@@ -9,6 +9,7 @@ var httpClient *hlb.RawReq
 
 type API struct {
 	Session sessionS
+	User    UserS
 }
 
 type HttpData struct {
