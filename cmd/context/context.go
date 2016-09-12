@@ -6,14 +6,14 @@ import (
 	"github.com/lastbackend/cli/libs/api"
 )
 
-type context struct {
+type Context struct {
 	API     api.API
 	Debug   debug.IDebug
 	Storage storage.Storage
 }
 
-var ctx context
+var ctx Context
 
-func Get() *context {
+func Get() *Context {
 	return &ctx
 }

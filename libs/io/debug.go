@@ -6,6 +6,8 @@ import (
 	"runtime"
 )
 
+const _NEWLINE = "\n"
+
 type Debug struct {
 	Skip int
 }
@@ -22,7 +24,7 @@ func (d *Debug) Error(err error) {
 
 func (d *Debug) Info(format string, a ...interface{}) {
 
-	d.printf(black(format), a...)
+	d.printf(yellow(format), a...)
 
 }
 
@@ -30,7 +32,7 @@ func (d *Debug) printf(format string, a ...interface{}) {
 
 	if isDebug() {
 		fmt.Printf("%s: ", cyan(fileInfo(d.Skip)))
-		fmt.Printf(format, a...)
+		fmt.Printf(format + _NEWLINE, a...)
 	}
 
 }
