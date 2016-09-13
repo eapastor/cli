@@ -27,9 +27,8 @@ func Login(c *cli.Context) (err error) {
 
 	h, token, err := ctx.API.Session.Get(login, password)
 	if err != nil {
-		ctx.Debug.Info("\n REQUEST : %+v \n\n RESPONSE : %+v \n", h.Request, h.Response)
 		ctx.Debug.Error(err)
-
+		ctx.Debug.Info("\n REQUEST : %+v \n\n RESPONSE : %+v \n", h.Request, h.Response)
 		return err
 	}
 
@@ -72,14 +71,14 @@ func Whoami(c *cli.Context) (err error) {
 
 	h, user, err := ctx.API.User.Get(token)
 	if err != nil {
+		ctx.Debug.Error(err)
 		ctx.Debug.Info("\n REQUEST : %+v \n\n RESPONSE : %+v \n", h.Request.Header, h.Response)
-
 		return err
 	}
 
 	ctx.Debug.Info("::user %#v", user)
 
-	io.Printf("You are loggined by %s ",user.Username)
+	io.Printf("%s %s ", config.Get().Msg.WhoAmI.LogginedBy, user.Username)
 
 	return nil
 

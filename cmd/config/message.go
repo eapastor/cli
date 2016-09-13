@@ -3,6 +3,7 @@ package config
 type Message struct {
 	Login  Login
 	Logout Logout
+	WhoAmI
 }
 
 type Login struct {
@@ -15,6 +16,10 @@ type Logout struct {
 	CredentialsClear string
 }
 
+type WhoAmI struct {
+	LogginedBy string
+}
+
 var Messages = Message{
 	Login{
 		StartMessage: "Enter your LastBackend credentials.",
@@ -23,5 +28,8 @@ var Messages = Message{
 	},
 	Logout{
 		CredentialsClear: "Local credentials cleared.",
+	},
+	WhoAmI{
+		LogginedBy: "You are loggined by ",
 	},
 }

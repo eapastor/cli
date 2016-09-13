@@ -4,11 +4,11 @@ import (
 	"github.com/lastbackend/cli/cmd/config"
 	"github.com/lastbackend/cli/cmd/context"
 	"github.com/lastbackend/cli/libs/io/filesystem"
-	"github.com/lastbackend/cli/libs/io"
 	"github.com/urfave/cli"
 	"os"
 	"github.com/lastbackend/cli/libs/storage"
 	"github.com/lastbackend/cli/libs/api"
+	"github.com/lastbackend/cli/libs/io/debug"
 )
 
 func Start() {
@@ -42,7 +42,7 @@ func initialize() {
 	cfg.LBDir = homedir + "/.LB"
 
 	ctx.API = api.New(cfg.ApiHost)
-	ctx.Debug = io.New(3)
+	ctx.Debug = debug.New(3)
 	ctx.Storage.Token = storage.New(cfg.LBDir + "/.tkn")
 
 	// Creating directories and files
