@@ -2,7 +2,7 @@ package api
 
 import "time"
 
-type UserS struct {}
+type userS struct {}
 
 type userM struct {
 	UUID     string    `json:"uuid"`
@@ -14,7 +14,7 @@ type userM struct {
 	Updated  time.Time `json:"updated"`
 }
 
-func (s UserS) Get(token string) (httpData HttpData, user *userM, err error) {
+func (s userS) Get(token string) (httpData HttpData, user *userM, err error) {
 
 	failure := new(failureS)
 

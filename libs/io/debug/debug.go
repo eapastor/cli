@@ -1,9 +1,10 @@
-package io
+package debug
 
 import (
 	"fmt"
 	"os"
 	"runtime"
+	"github.com/lastbackend/cli/libs/io/color"
 )
 
 const _NEWLINE = "\n"
@@ -18,20 +19,20 @@ func New(skip int) *Debug {
 
 func (d *Debug) Error(err error) {
 
-	d.printf(red(err.Error()))
+	d.printf(color.Red(err.Error()))
 
 }
 
 func (d *Debug) Info(format string, a ...interface{}) {
 
-	d.printf(yellow(format), a...)
+	d.printf(color.Yellow(format), a...)
 
 }
 
 func (d *Debug) printf(format string, a ...interface{}) {
 
 	if isDebug() {
-		fmt.Printf("%s: ", cyan(fileInfo(d.Skip)))
+		fmt.Printf("%s: ", color.Cyan(fileInfo(d.Skip)))
 		fmt.Printf(format + _NEWLINE, a...)
 	}
 

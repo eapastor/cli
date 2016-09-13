@@ -24,6 +24,18 @@ var commands []cli.Command = []cli.Command{
 		Action: routes.Whoami,
 		Before: auth,
 	},
+	{
+		Name: "service",
+		Usage: "",
+		Before: auth,
+		Subcommands: []cli.Command{
+			{
+				Name: "list",
+				Usage: "Get service list",
+				Action: routes.Services,
+			},
+		},
+	},
 }
 
 var flags []cli.Flag = []cli.Flag{
