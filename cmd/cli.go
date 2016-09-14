@@ -30,6 +30,16 @@ var commands []cli.Command = []cli.Command{
 		Before: auth,
 		Subcommands: []cli.Command{
 			{
+				Name: "create",
+				Usage:"Create service by git push",
+				Action:routes.Create,
+				Flags:[]cli.Flag{
+					cli.StringFlag{Name: "n, name", Usage:"Service name"},
+					cli.StringFlag{Name: "rg, region", Usage:"Region for service", Value: "cu"},
+					cli.UintFlag{Name: "m, memory", Usage: "service memory", Value:128},
+				},
+			},
+			{
 				Name: "list",
 				Usage: "Get service list",
 				Action: routes.Services,
