@@ -9,6 +9,8 @@ import (
 	"github.com/lastbackend/cli/libs/storage"
 	"github.com/lastbackend/cli/libs/api"
 	"github.com/lastbackend/cli/libs/io/debug"
+	"github.com/lastbackend/cli/libs/io"
+	"github.com/lastbackend/cli/libs/io/color"
 )
 
 func Start() {
@@ -21,6 +23,8 @@ func Start() {
 	app.Name = "lb"
 	app.Version = "dev"
 	app.Usage = "last.backend cli application"
+
+	app.CommandNotFound = commandNotFound
 
 	app.Flags = flags
 	app.Commands = commands
@@ -49,4 +53,8 @@ func initialize() {
 
 	filesystem.MkDir(cfg.LBDir)
 
+}
+
+func commandNotFound(c *cli.Context, command string) {
+	io.Println (color.Red("Command ") + color.Cyan(command) + color.Red(" not found!"))
 }
