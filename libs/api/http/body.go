@@ -4,8 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"io"
-	"fmt"
-	"os"
 )
 
 func (r *RawReq) BodyJSON(bodyJSON interface{}) *RawReq {
@@ -35,7 +33,7 @@ func encodeBodyJSON(bodyJSON interface{}) (io.Reader, error) {
 		if err != nil {
 			return nil, err
 		}
-		fmt.Fprintf(os.Stdout, "JSON %s", buf.String())
+		//fmt.Fprintf(os.Stdout, "JSON %s", buf.String())
 	}
 	return buf, nil
 
