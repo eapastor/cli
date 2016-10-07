@@ -11,16 +11,8 @@ func (c *command) initServiceCommands() {
 
 	app.Command("service", "", func(c *cli.Cmd) {
 
-		c.Spec = "[UUID]"
-
-		uuid := c.StringArg("UUID", "", "Service UUID")
-
 		c.Before = func() {
 			f.Auth()
-		}
-
-		c.Action = func() {
-			f.SERVICE.Get(*uuid)
 		}
 
 		c.Command("deploy", "Create service by git push", func(c *cli.Cmd) {
@@ -110,64 +102,76 @@ func (c *command) initServiceCommands() {
 
 		c.Command("start", "Start service", func(c *cli.Cmd) {
 
-			c.Spec = "UUID"
+			c.Spec = "NAME"
 
-			uuid := c.StringArg("UUID", "", "Service UUID")
+			name := c.StringArg("NAME", "", "Service name")
 
 			c.After = func() {
-				f.SERVICE.Get(*uuid)
+				f.SERVICE.Get(*name)
 			}
 
 			c.Action = func() {
-				f.SERVICE.Start(*uuid)
+				f.SERVICE.Start(*name)
 			}
 
 		})
 
 		c.Command("stop", "Stop service", func(c *cli.Cmd) {
 
-			c.Spec = "UUID"
+			c.Spec = "NAME"
 
-			uuid := c.StringArg("UUID", "", "Service UUID")
+			name := c.StringArg("NAME", "", "Service name")
 
 			c.After = func() {
-				f.SERVICE.Get(*uuid)
+				f.SERVICE.Get(*name)
 			}
 
 			c.Action = func() {
-				f.SERVICE.Stop(*uuid)
+				f.SERVICE.Stop(*name)
 			}
 
 		})
 
 		c.Command("restart", "Restart service", func(c *cli.Cmd) {
 
-			c.Spec = "UUID"
+			c.Spec = "NAME"
 
-			uuid := c.StringArg("UUID", "", "Service UUID")
+			name := c.StringArg("NAME", "", "Service name")
 
 			c.After = func() {
-				f.SERVICE.Get(*uuid)
+				f.SERVICE.Get(*name)
 			}
 
 			c.Action = func() {
-				f.SERVICE.Restart(*uuid)
+				f.SERVICE.Restart(*name)
 			}
 
 		})
 
 		c.Command("remove", "Remove service", func(c *cli.Cmd) {
 
-			c.Spec = "UUID"
+			c.Spec = "NAME"
 
-			uuid := c.StringArg("UUID", "", "Service UUID")
+			name := c.StringArg("NAME", "", "Service name")
 
 			c.After = func() {
 				f.SERVICE.List()
 			}
 
 			c.Action = func() {
-				f.SERVICE.Remove(*uuid)
+				f.SERVICE.Remove(*name)
+			}
+
+		})
+
+		c.Command("get", "Display service by name", func(c *cli.Cmd) {
+
+			c.Spec = "NAME"
+
+			name := c.StringArg("NAME", "", "Service name")
+
+			c.Action = func() {
+				f.SERVICE.Get(*name)
 			}
 
 		})

@@ -2,10 +2,10 @@ package cli
 
 import (
 	"github.com/lastbackend/cli/cmd/context"
+	"github.com/lastbackend/cli/libs/errors"
+	"github.com/lastbackend/cli/libs/io"
 	"github.com/lastbackend/cli/libs/io/table"
 	"github.com/lastbackend/cli/utils"
-	"github.com/lastbackend/cli/libs/io"
-	"github.com/lastbackend/cli/libs/errors"
 )
 
 type serviceS struct{}
@@ -55,23 +55,23 @@ func (serviceS) Deploy(name, region string, memory uint, template, git, docker s
 		sHub = "jumpstart"
 		sType = "jumpstart"
 		/*		{
-			"opts":{
-				"name":"fight",
-				"memory":128
-				},
-			"node":{
-				"uuid":"",
-				"region":"sa"
-			},
-			"source":{
-			"id":"f93d4c09-7a91-4837-8aa1-a55a218408b4",
-			"type":"jumpstart",
-			"hub":"jumpstart",
-			"repo":null,
-			"branch":null
-			}
-		}
-	}*/
+					"opts":{
+						"name":"fight",
+						"memory":128
+						},
+					"node":{
+						"uuid":"",
+						"region":"sa"
+					},
+					"source":{
+					"id":"f93d4c09-7a91-4837-8aa1-a55a218408b4",
+					"type":"jumpstart",
+					"hub":"jumpstart",
+					"repo":null,
+					"branch":null
+					}
+				}
+			}*/
 	}
 
 	if !utils.IsServiceName(name) {
@@ -151,12 +151,13 @@ func (serviceS) List() {
 
 }
 
-func (serviceS) Get(uuid string) {
+func (serviceS) Get(serviceName string) {
 
 	var ctx = context.Get()
 
-	if !utils.IsUUID(uuid) {
+	if !utils.IsServiceName(serviceName) {
 		io.Error(errors.Service.BadServiceUUID())
+		return
 	}
 
 	token, err := ctx.Storage.Token.Get()
@@ -166,7 +167,7 @@ func (serviceS) Get(uuid string) {
 		return
 	}
 
-	h, service, err := ctx.API.Service.Get(token, uuid)
+	h, service, err := ctx.API.Service.Get(token, serviceName)
 	if err != nil {
 		ctx.Debug.Error(err)
 		ctx.Debug.Info("\n REQUEST : %#v \n\n RESPONSE : %#v \n", h.Request, h.Response)
@@ -175,6 +176,11 @@ func (serviceS) Get(uuid string) {
 	}
 
 	ctx.Debug.Info("Services : %#v", service)
+
+	if service.UUID == "" {
+		io.Printf("Service %s not found", serviceName)
+		return
+	}
 
 	var header []string = []string{"UUID", "Name", "Status", "Provision", "Type", "Hub", "Owner", "Repository", "Branch"}
 	var data [][]string
@@ -188,12 +194,13 @@ func (serviceS) Get(uuid string) {
 
 }
 
-func (serviceS) Start(uuid string) {
+func (serviceS) Start(serviceName string) {
 
 	var ctx = context.Get()
 
-	if !utils.IsUUID(uuid) {
+	if !utils.IsServiceName(serviceName) {
 		io.Error(errors.Service.BadServiceUUID())
+		return
 	}
 
 	token, err := ctx.Storage.Token.Get()
@@ -203,7 +210,7 @@ func (serviceS) Start(uuid string) {
 		return
 	}
 
-	h, err := ctx.API.Service.Start(token, uuid)
+	h, err := ctx.API.Service.Start(token, serviceName)
 	if err != nil {
 		ctx.Debug.Error(err)
 		ctx.Debug.Info("\n REQUEST : %#v \n\n RESPONSE : %#v \n", h.Request, h.Response)
@@ -213,12 +220,13 @@ func (serviceS) Start(uuid string) {
 
 }
 
-func (serviceS) Restart(uuid string) {
+func (serviceS) Restart(serviceName string) {
 
 	var ctx = context.Get()
 
-	if !utils.IsUUID(uuid) {
+	if !utils.IsServiceName(serviceName) {
 		io.Error(errors.Service.BadServiceUUID())
+		return
 	}
 
 	token, err := ctx.Storage.Token.Get()
@@ -228,23 +236,23 @@ func (serviceS) Restart(uuid string) {
 		return
 	}
 
-	h, err := ctx.API.Service.Restart(token, uuid)
+	h, err := ctx.API.Service.Restart(token, serviceName)
 	if err != nil {
 		ctx.Debug.Error(err)
 		ctx.Debug.Info("\n REQUEST : %#v \n\n RESPONSE : %#v \n", h.Request, h.Response)
 		io.Error(errors.Err(err))
 		return
 	}
-
 
 }
 
-func (serviceS) Stop(uuid string) {
+func (serviceS) Stop(serviceName string) {
 
 	var ctx = context.Get()
 
-	if !utils.IsUUID(uuid) {
+	if !utils.IsServiceName(serviceName) {
 		io.Error(errors.Service.BadServiceUUID())
+		return
 	}
 
 	token, err := ctx.Storage.Token.Get()
@@ -254,23 +262,23 @@ func (serviceS) Stop(uuid string) {
 		return
 	}
 
-	h, err := ctx.API.Service.Stop(token, uuid)
+	h, err := ctx.API.Service.Stop(token, serviceName)
 	if err != nil {
 		ctx.Debug.Error(err)
 		ctx.Debug.Info("\n REQUEST : %#v \n\n RESPONSE : %#v \n", h.Request, h.Response)
 		io.Error(errors.Err(err))
 		return
 	}
-
 
 }
 
-func (serviceS) Remove(uuid string) {
+func (serviceS) Remove(serviceName string) {
 
 	var ctx = context.Get()
 
-	if !utils.IsUUID(uuid) {
+	if !utils.IsServiceName(serviceName) {
 		io.Error(errors.Service.BadServiceUUID())
+		return
 	}
 
 	token, err := ctx.Storage.Token.Get()
@@ -280,13 +288,12 @@ func (serviceS) Remove(uuid string) {
 		return
 	}
 
-	h, err := ctx.API.Service.Remove(token, uuid)
+	h, err := ctx.API.Service.Remove(token, serviceName)
 	if err != nil {
 		ctx.Debug.Error(err)
 		ctx.Debug.Info("\n REQUEST : %#v \n\n RESPONSE : %#v \n", h.Request, h.Response)
 		io.Error(errors.Err(err))
 		return
 	}
-
 
 }
