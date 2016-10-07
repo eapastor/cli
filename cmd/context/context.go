@@ -1,9 +1,9 @@
 package context
 
 import (
-	"github.com/lastbackend/lb/libs/interface/debug"
-	"github.com/lastbackend/lb/libs/interface/storage"
-	"github.com/lastbackend/lb/libs/api"
+	"github.com/lastbackend/cli/libs/interface/debug"
+	"github.com/lastbackend/cli/libs/interface/storage"
+	"github.com/lastbackend/cli/libs/api"
 )
 
 type Context struct {

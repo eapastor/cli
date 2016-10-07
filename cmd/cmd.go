@@ -3,13 +3,13 @@ package cmd
 import (
 	"github.com/jawher/mow.cli"
 	"os"
-	"github.com/lastbackend/lb/cmd/command"
-	"github.com/lastbackend/lb/libs/io/filesystem"
-	"github.com/lastbackend/lb/cmd/config"
-	"github.com/lastbackend/lb/cmd/context"
-	"github.com/lastbackend/lb/libs/api"
-	"github.com/lastbackend/lb/libs/io/debug"
-	"github.com/lastbackend/lb/libs/storage"
+	"github.com/lastbackend/cli/cmd/command"
+	"github.com/lastbackend/cli/libs/io/filesystem"
+	"github.com/lastbackend/cli/cmd/config"
+	"github.com/lastbackend/cli/cmd/context"
+	"github.com/lastbackend/cli/libs/api"
+	"github.com/lastbackend/cli/libs/io/debug"
+	"github.com/lastbackend/cli/libs/storage"
 )
 
 func Execute() {

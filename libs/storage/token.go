@@ -2,7 +2,7 @@ package storage
 
 import (
 )
-import "github.com/lastbackend/lb/libs/io/filesystem"
+import "github.com/lastbackend/cli/libs/io/filesystem"
 
 const _TOKEN_TYPE = "Bearer "
 

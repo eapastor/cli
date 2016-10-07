@@ -1,11 +1,11 @@
 package cli
 
 import (
-	"github.com/lastbackend/lb/cmd/context"
-	"github.com/lastbackend/lb/libs/io/table"
-	"github.com/lastbackend/lb/utils"
-	"github.com/lastbackend/lb/libs/io"
-	"github.com/lastbackend/lb/libs/errors"
+	"github.com/lastbackend/cli/cmd/context"
+	"github.com/lastbackend/cli/libs/io/table"
+	"github.com/lastbackend/cli/utils"
+	"github.com/lastbackend/cli/libs/io"
+	"github.com/lastbackend/cli/libs/errors"
 )
 
 type serviceS struct{}

@@ -2,10 +2,10 @@ package cli
 
 import (
 	"github.com/howeyc/gopass"
-	"github.com/lastbackend/lb/cmd/config"
-	"github.com/lastbackend/lb/cmd/context"
-	"github.com/lastbackend/lb/libs/io"
-	"github.com/lastbackend/lb/libs/errors"
+	"github.com/lastbackend/cli/cmd/config"
+	"github.com/lastbackend/cli/cmd/context"
+	"github.com/lastbackend/cli/libs/io"
+	"github.com/lastbackend/cli/libs/errors"
 )
 
 func Auth() {

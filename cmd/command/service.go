@@ -3,7 +3,7 @@ package command
 import (
 	"fmt"
 	"github.com/jawher/mow.cli"
-	f "github.com/lastbackend/lb/cli"
+	f "github.com/lastbackend/cli/cli"
 )
 
 func (c *command) initServiceCommands() {

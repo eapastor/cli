@@ -2,7 +2,7 @@ package main
 
 import (
 	"os"
-	"github.com/lastbackend/lb/cmd"
+	"github.com/lastbackend/cli/cmd"
 )
 
 

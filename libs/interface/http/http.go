@@ -1,7 +1,7 @@
 package http
 
 import (
-	LBhttp "github.com/lastbackend/lb/libs/http"
+	LBhttp "github.com/lastbackend/cli/libs/http"
 	"net/http"
 )
 
