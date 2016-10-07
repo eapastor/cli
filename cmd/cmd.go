@@ -3,20 +3,20 @@ package cmd
 import (
 	"github.com/jawher/mow.cli"
 	"os"
-	"github.com/lastbackend/cli/cmd/command"
-	"github.com/lastbackend/cli/libs/io/filesystem"
-	"github.com/lastbackend/cli/cmd/config"
-	"github.com/lastbackend/cli/cmd/context"
-	"github.com/lastbackend/cli/libs/api"
-	"github.com/lastbackend/cli/libs/io/debug"
-	"github.com/lastbackend/cli/libs/storage"
+	"github.com/lastbackend/lb/cmd/command"
+	"github.com/lastbackend/lb/libs/io/filesystem"
+	"github.com/lastbackend/lb/cmd/config"
+	"github.com/lastbackend/lb/cmd/context"
+	"github.com/lastbackend/lb/libs/api"
+	"github.com/lastbackend/lb/libs/io/debug"
+	"github.com/lastbackend/lb/libs/storage"
 )
 
 func Execute() {
 
 	app := cli.App("lb", "Last.Backend cli application")
 
-	app.Version("v version", "cli 1.0.0")
+	app.Version("v version", "lb 1.0.0")
 
 	command.InitCommands(app)
 

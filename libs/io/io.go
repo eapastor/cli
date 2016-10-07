@@ -4,7 +4,7 @@ import (
 	"io"
 	"os"
 	"fmt"
-	"github.com/lastbackend/cli/libs/io/color"
+	"github.com/lastbackend/lb/libs/io/color"
 )
 
 // Stdout is used to mock stdout for testing

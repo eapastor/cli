@@ -5,8 +5,9 @@ import "errors"
 var storageErrors []map[string]string
 
 func init()  {
-	storageErrors = append(storageErrors, storageCustomErrors)
-	storageErrors = append(storageErrors, storageServiceErrors)
+	storageErrors = append(storageErrors, storageCustomErrors,
+																				storageServiceErrors,
+																				storageAuthErrors)
 }
 
 func Err(err error) string {

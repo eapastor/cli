@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 	"runtime"
-	"github.com/lastbackend/cli/libs/io/color"
+	"github.com/lastbackend/lb/libs/io/color"
 )
 
 const _NEWLINE = "\n"

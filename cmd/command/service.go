@@ -3,7 +3,7 @@ package command
 import (
 	"fmt"
 	"github.com/jawher/mow.cli"
-	f "github.com/lastbackend/cli/cli"
+	f "github.com/lastbackend/lb/cli"
 )
 
 func (c *command) initServiceCommands() {
@@ -102,7 +102,7 @@ func (c *command) initServiceCommands() {
 
 		})
 
-		c.Command("list", "Get service list", func(c *cli.Cmd) {
+		c.Command("list", "Dislay service list", func(c *cli.Cmd) {
 
 			c.Action = func() {
 				fmt.Println("Service list called")
@@ -127,7 +127,7 @@ func (c *command) initServiceCommands() {
 
 		})
 
-		c.Command("stop", "Start service", func(c *cli.Cmd) {
+		c.Command("stop", "Stop service", func(c *cli.Cmd) {
 
 			c.Spec = "UUID"
 
@@ -143,7 +143,7 @@ func (c *command) initServiceCommands() {
 
 		})
 
-		c.Command("restart", "Start service", func(c *cli.Cmd) {
+		c.Command("restart", "Restart service", func(c *cli.Cmd) {
 
 			c.Spec = "UUID"
 
@@ -159,7 +159,7 @@ func (c *command) initServiceCommands() {
 
 		})
 
-		c.Command("remove", "Start service", func(c *cli.Cmd) {
+		c.Command("remove", "Remove service", func(c *cli.Cmd) {
 
 			c.Spec = "UUID"
 

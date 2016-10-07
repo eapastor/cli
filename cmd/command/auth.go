@@ -2,7 +2,7 @@ package command
 
 import (
 	"github.com/jawher/mow.cli"
-	f "github.com/lastbackend/cli/cli"
+	f "github.com/lastbackend/lb/cli"
 )
 
 func (c *command) initAuthCommands() {

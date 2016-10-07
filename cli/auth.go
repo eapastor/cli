@@ -2,9 +2,10 @@ package cli
 
 import (
 	"github.com/howeyc/gopass"
-	"github.com/lastbackend/cli/cmd/config"
-	"github.com/lastbackend/cli/cmd/context"
-	"github.com/lastbackend/cli/libs/io"
+	"github.com/lastbackend/lb/cmd/config"
+	"github.com/lastbackend/lb/cmd/context"
+	"github.com/lastbackend/lb/libs/io"
+	"github.com/lastbackend/lb/libs/errors"
 )
 
 func Auth() {
@@ -52,18 +53,18 @@ func Login() {
 	if err != nil {
 		ctx.Debug.Error(err)
 		ctx.Debug.Info("\n REQUEST : %+v \n\n RESPONSE : %+v \n", h.Request, h.Response)
-		io.Error(err.Error())
+		io.Error(errors.Err(err))
+		return
 	}
 
 	if token != "" {
 		err = ctx.Storage.Token.Set(token)
 		if err != nil {
 			ctx.Debug.Error(err)
-			io.Error(err.Error())
+			io.Error(errors.Err(err))
 			return
 		}
 	}
-
 
 }
 
@@ -101,7 +102,7 @@ func Whoami() {
 	if err != nil {
 		ctx.Debug.Error(err)
 		ctx.Debug.Info("\n REQUEST : %+v \n\n RESPONSE : %+v \n", h.Request.Header, h.Response)
-		io.Error(err.Error())
+		io.Error(errors.Err(err))
 		return
 	}
 
