@@ -17,6 +17,6 @@ func checkError(failure *failureS) (ok bool, err error) {
 	if failure.Error.Code == "" && failure.Error.Description == ""{
 		return false, nil
 	}
-	return true, errors.New(fmt.Sprintf("%s %s", failure.Error.Code, failure.Error.Description))
+	return true, errors.New(fmt.Sprintf("%s: %s", failure.Error.Code, failure.Error.Description))
 
 }

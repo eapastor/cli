@@ -17,7 +17,8 @@ type Logout struct {
 }
 
 type WhoAmI struct {
-	LogginedBy string
+	NotLoggined string
+	LogginedBy  string
 }
 
 var Messages = Message{
@@ -30,6 +31,7 @@ var Messages = Message{
 		CredentialsClear: "Local credentials cleared.",
 	},
 	WhoAmI{
-		LogginedBy: "You are loggined by ",
+		NotLoggined: "You are not loggined",
+		LogginedBy:  "You are loggined by",
 	},
 }

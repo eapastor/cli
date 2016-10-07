@@ -5,6 +5,10 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"fmt"
+	"strings"
+	"bytes"
+	"errors"
 )
 
 const (
@@ -56,7 +60,7 @@ func (r *RawReq) Request(successV, failureV interface{}) (req *http.Request, res
 
 func (r *RawReq) AddHeader(key, value string) *RawReq {
 
-	r.header.Add(key, value)
+	r.header.Set(key, value)
 	return r
 
 }
@@ -96,7 +100,23 @@ func decodeResponseJSON(resp *http.Response, successV, failureV interface{}) err
 		}
 	} else {
 		if failureV != nil {
-			return decodeResponseBodyJSON(resp, failureV)
+			switch strings.Split(resp.Header.Get("Content-type"), ";")[0] {
+			case "text/html":
+				buf := new(bytes.Buffer)
+				buf.ReadFrom(resp.Body)
+				s := buf.String()
+				fmt.Println(s)
+			case "text/plain":
+				buf := new(bytes.Buffer)
+				buf.ReadFrom(resp.Body)
+				s := buf.String()
+				fmt.Println(s)
+			case "application/json":
+				return decodeResponseBodyJSON(resp, failureV)
+				fmt.Printf("%+v", failureV)
+			default:
+				return errors.New(fmt.Sprintf("Unknown content-type (%+v)", strings.Split(resp.Header.Get("Content-type"), ";")))
+			}
 		}
 	}
 	return nil
