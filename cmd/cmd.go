@@ -1,39 +1,30 @@
 package cmd
 
 import (
+	"github.com/jawher/mow.cli"
+	"os"
+	"github.com/lastbackend/cli/cmd/command"
+	"github.com/lastbackend/cli/libs/io/filesystem"
 	"github.com/lastbackend/cli/cmd/config"
 	"github.com/lastbackend/cli/cmd/context"
-	"github.com/lastbackend/cli/libs/io/filesystem"
-	"github.com/urfave/cli"
-	"os"
-	"github.com/lastbackend/cli/libs/storage"
 	"github.com/lastbackend/cli/libs/api"
 	"github.com/lastbackend/cli/libs/io/debug"
-	"github.com/lastbackend/cli/libs/io"
-	"github.com/lastbackend/cli/libs/io/color"
+	"github.com/lastbackend/cli/libs/storage"
 )
 
-func Start() {
+func Execute() {
 
-	config.Get()
+	app := cli.App("lb", "Last.Backend cli application")
 
-	initialize()
+	app.Version("v version", "lb 1.0.0")
 
-	app := cli.NewApp()
-	app.Name = "lb"
-	app.Version = "dev"
-	app.Usage = "last.backend cli application"
-
-	app.CommandNotFound = commandNotFound
-
-	app.Flags = flags
-	app.Commands = commands
+	command.InitCommands(app)
 
 	app.Run(os.Args)
 
 }
 
-func initialize() {
+func init() {
 
 	var cfg = config.Get()
 	var ctx = context.Get()
@@ -43,7 +34,7 @@ func initialize() {
 		os.Exit(1)
 	}
 
-	cfg.LBDir = homedir + "/.LB"
+	cfg.LBDir = homedir + "/.lb"
 
 	ctx.API = api.New(cfg.ApiHost)
 	ctx.Debug = debug.New(3)
@@ -55,6 +46,6 @@ func initialize() {
 
 }
 
-func commandNotFound(c *cli.Context, command string) {
-	io.Println (color.Red("Command ") + color.Cyan(command) + color.Red(" not found!"))
-}
+//func commandNotFound(c *cli.Context, command string) {
+//	io.Println (color.Red("Command ") + color.Cyan(command) + color.Red(" not found!"))
+//}

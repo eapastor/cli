@@ -1,6 +1,9 @@
 package utils
 
-import "regexp"
+import (
+	"regexp"
+	"github.com/asaskevich/govalidator"
+)
 
 func IsServiceName(s string) bool {
 
@@ -13,13 +16,19 @@ func IsServiceName(s string) bool {
 
 }
 
-const _DIV_MEMORY uint = 128
-
 func IsMemory(num uint) bool {
+
+	const _DIV_MEMORY uint = 128
 
 	if num % _DIV_MEMORY == 0 {
 		return true
 	}
 	return false
+
+}
+
+func IsUUID(uuid string) bool {
+
+	return govalidator.IsUUIDv4(uuid)
 
 }

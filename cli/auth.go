@@ -1,14 +1,37 @@
-package routes
+package cli
 
 import (
 	"github.com/howeyc/gopass"
 	"github.com/lastbackend/cli/cmd/config"
 	"github.com/lastbackend/cli/cmd/context"
 	"github.com/lastbackend/cli/libs/io"
-	"github.com/urfave/cli"
+	"github.com/lastbackend/cli/libs/errors"
 )
 
-func Login(c *cli.Context) (err error) {
+func Auth() {
+
+	ctx := context.Get()
+
+	token, err := ctx.Storage.Token.Get()
+	if err != nil {
+		ctx.Debug.Error(err)
+		io.Error(err.Error())
+		return
+	}
+
+	ctx.Debug.Info("::token %s", token)
+
+	if token != "" {
+		return
+	}
+
+	Login()
+
+	ctx.Debug.Info("::token %s", token)
+
+}
+
+func Login() {
 
 	var msg = config.Get().Msg
 	var ctx = context.Get()
@@ -20,7 +43,8 @@ func Login(c *cli.Context) (err error) {
 	bytePass, err := gopass.GetPasswd()
 	if err != nil {
 		ctx.Debug.Error(err)
-		return err
+		io.Error(err.Error())
+		return
 	}
 
 	password := string(bytePass)
@@ -29,57 +53,61 @@ func Login(c *cli.Context) (err error) {
 	if err != nil {
 		ctx.Debug.Error(err)
 		ctx.Debug.Info("\n REQUEST : %+v \n\n RESPONSE : %+v \n", h.Request, h.Response)
-		return err
+		io.Error(errors.Err(err))
+		return
 	}
 
 	if token != "" {
 		err = ctx.Storage.Token.Set(token)
 		if err != nil {
 			ctx.Debug.Error(err)
-			return err
+			io.Error(errors.Err(err))
+			return
 		}
 	}
 
-	return nil
-
 }
 
-func Logout(c *cli.Context) (err error) {
+func Logout() {
 
 	ctx := context.Get()
 
-	err = ctx.Storage.Token.Delete()
+	err := ctx.Storage.Token.Delete()
 	if err != nil {
 		ctx.Debug.Error(err)
-		return err
+		io.Error(err.Error())
+		return
 	}
 	io.Println(config.Get().Msg.Logout.CredentialsClear)
 
-	return nil
-
 }
 
-func Whoami(c *cli.Context) (err error) {
+func Whoami() {
 
 	ctx := context.Get()
+	cfg := config.Get()
 
 	token, err := context.Get().Storage.Token.Get()
 	if err != nil {
 		ctx.Debug.Error(err)
-		return err
+		io.Error(err.Error())
+		return
+	}
+
+	if token == "" {
+		io.Println(cfg.Msg.NotLoggined)
 	}
 
 	h, user, err := ctx.API.User.Get(token)
 	if err != nil {
 		ctx.Debug.Error(err)
 		ctx.Debug.Info("\n REQUEST : %+v \n\n RESPONSE : %+v \n", h.Request.Header, h.Response)
-		return err
+		io.Error(errors.Err(err))
+		return
 	}
 
 	ctx.Debug.Info("::user %#v", user)
 
-	io.Printf("%s %s ", config.Get().Msg.WhoAmI.LogginedBy, user.Username)
-
-	return nil
+	io.Printf("%s %s ", cfg.Msg.WhoAmI.LogginedBy, user.Username)
 
 }

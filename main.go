@@ -57,7 +57,7 @@ func main() {
 	//	fmt.Printf("\n \x1b[33m %+v: \x1b[39m \n", utils.GitUrlParse(v))
 	//}
 
-	cmd.Start()
+	cmd.Execute()
 	os.Exit(0)
 
 }

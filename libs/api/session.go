@@ -20,7 +20,9 @@ func (s sessionS) Get(login string, pass string) (httpData HttpData, token strin
 
 	success.Token = success.Token
 
-	httpData.Request, httpData.Response, err = httpClient.POST("/session").BodyJSON(credentials).Request(&success, &failure)
+	httpData.Request, httpData.Response, err = httpClient.POST("/session").
+	                                           BodyJSON(credentials).
+		                                         Request(&success, &failure)
 	if err != nil {
 		return httpData, "", err
 	}

@@ -18,8 +18,8 @@ type serviceM struct {
 }
 
 type serviceCreateS struct {
-	Opts optsS`json:"opts,omitempty"`
-	Node nodeS `json:"node,omitempty"`
+	Opts   optsS         `json:"opts,omitempty"`
+	Node   nodeS         `json:"node,omitempty"`
 	Source sourceCreateS `json:"source,omitempty"`
 }
 
@@ -88,7 +88,7 @@ func (serviceS) Create(token, name string, memory uint, nodeUUID, nodeType, node
 
 }
 
-func (s serviceS) List(token string) (HttpData, *[]serviceM, error) {
+func (serviceS) List(token string) (HttpData, *[]serviceM, error) {
 
 	var httpData HttpData
 	var err error
@@ -107,5 +107,115 @@ func (s serviceS) List(token string) (HttpData, *[]serviceM, error) {
 	}
 
 	return httpData, success, nil
+
+}
+
+func (serviceS) Get(token, uuid string) (HttpData, *serviceM, error) {
+
+	var httpData HttpData
+	var err error
+
+	failure := new(failureS)
+
+	success := new(serviceM)
+
+	httpData.Request, httpData.Response, err = httpClient.GET("/service/" + uuid).AddHeader("Authorization", token).Request(&success, &failure)
+	if err != nil {
+		return httpData, nil, err
+	}
+
+	if ok, err := checkError(failure); ok {
+		return httpData, nil, err
+	}
+
+	return httpData, success, nil
+
+}
+
+func (serviceS) Remove(token, uuid string) (HttpData, error) {
+
+	var httpData HttpData
+	var err error
+
+	failure := new(failureS)
+
+	success := new(struct{})
+
+	httpData.Request, httpData.Response, err = httpClient.DELETE("/service/" + uuid).AddHeader("Authorization", token).Request(success, failure)
+	if err != nil {
+		return httpData, err
+	}
+
+	if ok, err := checkError(failure); ok {
+		return httpData, err
+	}
+
+	return httpData, nil
+
+}
+
+func (serviceS) Start(token, uuid string) (HttpData, error) {
+
+	var httpData HttpData
+	var err error
+
+	failure := new(failureS)
+
+	success := new(struct{})
+
+	httpData.Request, httpData.Response, err = httpClient.POST("/service/" + uuid + "/start").AddHeader("Authorization", token).Request(success, failure)
+	if err != nil {
+		return httpData, err
+	}
+
+	if ok, err := checkError(failure); ok {
+		return httpData, err
+	}
+
+	return httpData, nil
+
+}
+
+func (serviceS) Stop(token, uuid string) (HttpData, error) {
+
+	var httpData HttpData
+	var err error
+
+	failure := new(failureS)
+
+	success := new(struct{})
+
+	httpData.Request, httpData.Response, err = httpClient.POST("/service/" + uuid + "/stop").AddHeader("Authorization", token).Request(success, failure)
+	if err != nil {
+		return httpData, err
+	}
+
+	if ok, err := checkError(failure); ok {
+		return httpData, err
+	}
+
+	return httpData, nil
+
+}
+
+func (serviceS) Restart(token, uuid string) (HttpData, error) {
+
+	var httpData HttpData
+	var err error
+
+	failure := new(failureS)
+
+	success := new(struct{})
+
+	httpData.Request, httpData.Response, err = httpClient.POST("/service/" + uuid + "/restart").AddHeader("Authorization", token).Request(success, failure)
+	if err != nil {
+		return httpData, err
+	}
+
+	if ok, err := checkError(failure); ok {
+		return httpData, err
+	}
+
+	return httpData, nil
 
 }
