@@ -1,7 +1,6 @@
 package command
 
 import (
-	"fmt"
 	"github.com/jawher/mow.cli"
 	f "github.com/lastbackend/cli/cli"
 )
@@ -38,7 +37,6 @@ func (c *command) initServiceCommands() {
 			uintMemory := uint(*memory)
 
 			c.Action = func() {
-				fmt.Printf("[Git push] Service deploy with name = %s, region = %s and memory = %d [js = %s, d = %s, g = %s]\n", *name, *region, *memory, *template, *docker, *git)
 				f.SERVICE.Deploy(*name, *region, uintMemory, *template, *git, *docker)
 			}
 
@@ -105,7 +103,6 @@ func (c *command) initServiceCommands() {
 		c.Command("list", "Dislay service list", func(c *cli.Cmd) {
 
 			c.Action = func() {
-				fmt.Println("Service list called")
 				f.SERVICE.List()
 			}
 

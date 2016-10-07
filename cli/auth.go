@@ -96,6 +96,7 @@ func Whoami() {
 
 	if token == "" {
 		io.Println(cfg.Msg.NotLoggined)
+		return
 	}
 
 	h, user, err := ctx.API.User.Get(token)
